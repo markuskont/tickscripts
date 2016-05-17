@@ -1,0 +1,14 @@
+#var warn_threshold = 30
+#var crit_threshold = 10
+
+var data = stream
+    .from().measurement('system')
+	.select('load1')
+        .groupBy('host')
+
+// Do normal alerting
+    data.alert()
+        .warn(lambda: "usage_idle" < warn_threshold)
+        .crit(lambda: "usage_idle" < crit_threshold)
+         // Log alerts
+        .log('/var/log/kapacitor/alerts.json')

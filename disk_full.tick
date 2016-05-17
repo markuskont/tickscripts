@@ -1,0 +1,20 @@
+var warn_threshold = 90
+var crit_threshold = 95
+
+var memory = stream
+  |from()
+    .database('telegraf')
+    .retentionPolicy('default')
+    .measurement('disk')
+    .groupBy('host')
+    .groupBy('path')
+
+memory
+  |alert()
+    .id('[kapacitor] {{ index .Tags "host"}}')
+    .message('{{ .ID }} {{index .Tags "path"}} is {{ .Level }} value:{{ index .Fields "used_percent" }}')
+    .warn(lambda: "used_percent" > warn_threshold)
+    .crit(lambda: "used_percent" > crit_threshold)
+    .stateChangesOnly()
+    .log('/var/log/kapacitor/alerts.log')
+    .email()

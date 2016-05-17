@@ -1,0 +1,19 @@
+var warn_threshold = 85
+var crit_threshold = 90
+
+var memory = stream
+  |from()
+    .database('telegraf')
+    .retentionPolicy('default')
+    .measurement('mem')
+    .groupBy('host')
+
+memory
+  |alert()
+    .id('[kapacitor] {{ index .Tags "host"}}')
+    .message('{{ .ID }} memory is {{ .Level }} value:{{ index .Fields "used_percent" }}')
+    .warn(lambda: "used_percent" > warn_threshold)
+    .crit(lambda: "used_percent" > crit_threshold)
+    .stateChangesOnly()
+    .log('/var/log/kapacitor/alerts.log')
+    .email()
