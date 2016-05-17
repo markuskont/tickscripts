@@ -6,13 +6,12 @@ var memory = stream
     .database('telegraf')
     .retentionPolicy('default')
     .measurement('disk')
-    .groupBy('host')
-    .groupBy('path')
+    .groupBy('host', 'path')
 
 memory
   |alert()
-    .id('[kapacitor] {{ index .Tags "host"}}')
-    .message('{{ .ID }} {{index .Tags "path"}} is {{ .Level }} value:{{ index .Fields "used_percent" }}')
+    .id('[kapacitor] {{ index .Tags "host"}} | {{ index .Tags "path"}}')
+    .message('{{ .ID }} is {{ .Level }} value:{{ index .Fields "used_percent" }}')
     .warn(lambda: "used_percent" > warn_threshold)
     .crit(lambda: "used_percent" > crit_threshold)
     .stateChangesOnly()
