@@ -1,5 +1,5 @@
-var warn_threshold = 2
-var crit_threshold = 3
+var warn_threshold = 3
+var crit_threshold = 5
 
 var memory = stream
   |from()
@@ -16,4 +16,3 @@ memory
     .crit(lambda: sigma("load1") > crit_threshold)
     .stateChangesOnly()
     .log('/var/log/kapacitor/alerts.log')
-    .email()
