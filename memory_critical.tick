@@ -7,6 +7,7 @@ var memory = stream
     .retentionPolicy('default')
     .measurement('mem')
     .groupBy('host')
+    .where(lambda: "environment" != 'devel')
 
 memory
   |alert()
