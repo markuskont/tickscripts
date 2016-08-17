@@ -10,7 +10,8 @@ var memory = stream
 
 memory
   |alert()
-    .alerta()
+     .alerta()
+         .value('{{ index .Fields "load1" }}')
      .id('[kapacitor] {{ index .Tags "host"}}')
      .message('{{ .ID }} LOAD1 is {{ .Level }} value:{{ index .Fields "load1" }}')
      .warn(lambda: sigma("load1") > warn_threshold)

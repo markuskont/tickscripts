@@ -12,6 +12,7 @@ var memory = stream
 memory
   |alert()
     .alerta()
+     .value('{{ index .Fields "usage_iowait" }}')
      .id('[kapacitor] {{ index .Tags "host"}}')
      .message('{{ .ID }} IOWAIT is {{ .Level }} value:{{ index .Fields "usage_iowait" }}')
      .warn(lambda: sigma("usage_iowait") > warn_threshold)
