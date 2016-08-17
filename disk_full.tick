@@ -1,5 +1,5 @@
-var warn_threshold = 90
-var crit_threshold = 95
+var warn_threshold = 85
+var crit_threshold = 90
 
 var memory = stream
   |from()
