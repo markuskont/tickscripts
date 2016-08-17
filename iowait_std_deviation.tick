@@ -5,7 +5,7 @@ var memory = stream
   |from()
     .database('telegraf')
     .retentionPolicy('default')
-    .measurement('system')
+    .measurement('cpu')
     .groupBy('host')
 
 memory
