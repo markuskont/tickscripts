@@ -11,6 +11,7 @@ var memory = stream
 
 memory
   |alert()
+   .alerta()
     .id('[kapacitor] {{ index .Tags "host"}}')
     .message('{{ .ID }} memory is {{ .Level }} value:{{ index .Fields "used_percent" }}')
     .warn(lambda: "used_percent" > warn_threshold)

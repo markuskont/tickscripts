@@ -10,10 +10,11 @@ var memory = stream
 
 memory
   |alert()
-    .id('[kapacitor] {{ index .Tags "host"}} | {{ index .Tags "path"}}')
-    .message('{{ .ID }} is {{ .Level }} value:{{ index .Fields "used_percent" }}')
-    .warn(lambda: "used_percent" > warn_threshold)
-    .crit(lambda: "used_percent" > crit_threshold)
-    .stateChangesOnly()
-    .log('/var/log/kapacitor/alerts.log')
-    .email()
+    .alerta()
+     .id('[kapacitor] {{ index .Tags "host"}} | {{ index .Tags "path"}}')
+     .message('{{ .ID }} is {{ .Level }} value:{{ index .Fields "used_percent" }}')
+     .warn(lambda: "used_percent" > warn_threshold)
+     .crit(lambda: "used_percent" > crit_threshold)
+     .stateChangesOnly()
+     .log('/var/log/kapacitor/alerts.log')
+     .email()
