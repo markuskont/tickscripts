@@ -1,5 +1,5 @@
 var warn_threshold = 3
-var crit_threshold = 5
+var crit_threshold = 75
 
 var memory = stream
   |from()
@@ -16,6 +16,6 @@ memory
      .id('[kapacitor] {{ index .Tags "host"}}')
      .message('{{ .ID }} IOWAIT is {{ .Level }} value:{{ index .Fields "usage_iowait" }}')
      .warn(lambda: sigma("usage_iowait") > warn_threshold)
-     .crit(lambda: sigma("usage_iowait") > crit_threshold)
+     .crit(lambda: "usage_iowait" > crit_threshold)
      .stateChangesOnly()
      .log('/var/log/kapacitor/alerts.log')
