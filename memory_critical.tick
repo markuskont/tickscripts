@@ -13,6 +13,7 @@ memory
   |alert()
    .alerta()
     .value('{{ index .Fields "used_percent" }}')
+    .resource('{{ index .Tags "host"}}')
     .id('[kapacitor] {{ index .Tags "host"}}')
     .message('{{ .ID }} memory is {{ .Level }} value:{{ index .Fields "used_percent" }}')
     .warn(lambda: "used_percent" > warn_threshold)

@@ -12,6 +12,7 @@ memory
   |alert()
      .alerta()
          .value('{{ index .Fields "load1" }}')
+         .resource('{{ index .Tags "host"}}')
      .id('[kapacitor] {{ index .Tags "host"}}')
      .message('{{ .ID }} LOAD1 is {{ .Level }} value:{{ index .Fields "load1" }}')
      .warn(lambda: sigma("load1") > warn_threshold)
