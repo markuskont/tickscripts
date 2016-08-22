@@ -4,7 +4,7 @@ var crit_threshold = 75
 var memory = stream
   |from()
     .database('telegraf')
-    .retentionPolicy('default')
+    .retentionPolicy('one_day_only')
     .measurement('cpu')
     .groupBy('host')
     .where(lambda: "environment" != 'devel')

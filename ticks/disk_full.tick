@@ -4,7 +4,7 @@ var crit_threshold = 90
 var memory = stream
   |from()
     .database('telegraf')
-    .retentionPolicy('default')
+    .retentionPolicy('one_day_only')
     .measurement('disk')
     .groupBy('host', 'path')
 
