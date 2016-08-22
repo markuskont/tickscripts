@@ -1,4 +1,5 @@
-var warn_threshold = 3
+var info_threshold = 3
+var warn_threshold = 25
 var crit_threshold = 75
 
 var memory = stream
@@ -8,6 +9,7 @@ var memory = stream
     .measurement('cpu')
     .groupBy('host')
     .where(lambda: "environment" != 'devel')
+    .where(lambda: "cpu" == 'cpu-total')
 
 memory
   |alert()
@@ -16,7 +18,8 @@ memory
      .resource('{{ index .Tags "host"}}')
      .id('[kapacitor] {{ index .Tags "host"}}')
      .message('{{ .ID }} IOWAIT is {{ .Level }} value:{{ index .Fields "usage_iowait" }}')
-     .warn(lambda: sigma("usage_iowait") > warn_threshold)
+     .info(lambda: sigma("usage_iowait") > info_threshold)
+     .warn(lambda: "usage_iowait" > warn_threshold)
      .crit(lambda: "usage_iowait" > crit_threshold)
      .stateChangesOnly()
      .log('/var/log/kapacitor/alerts.log')
