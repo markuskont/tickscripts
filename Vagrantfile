@@ -29,6 +29,7 @@ Vagrant.configure(2) do |config|
       config.vm.provision "shell", path: "./scripts/install_telegraf.sh", args: opts[:ip]
       config.vm.provision "shell", path: "./scripts/install_grafana.sh", args: opts[:ip]
       config.vm.provision "shell", path: "./scripts/install_kapacitor.sh", args: opts[:ip]
+      config.vm.provision "shell", path: "./scripts/register_ticks.sh"
       #config.vm.synced_folder ".", "/home/vagrant/src/github.com/influxdata/telegraf"
     end
   end
