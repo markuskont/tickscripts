@@ -8,14 +8,10 @@ var memory = stream
     .retentionPolicy('one_day_only')
     .measurement('cpu')
     .groupBy('host')
-    .where(lambda: "environment" != 'devel')
     .where(lambda: "cpu" == 'cpu-total')
 
 memory
   |alert()
-    .alerta()
-     .value('{{ index .Fields "usage_iowait" }}')
-     .resource('{{ index .Tags "host"}}')
      .id('[kapacitor] {{ index .Tags "host"}}')
      .message('{{ .ID }} IOWAIT is {{ .Level }} value:{{ index .Fields "usage_iowait" }}')
      .info(lambda: sigma("usage_iowait") > info_threshold)

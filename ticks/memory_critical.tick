@@ -7,13 +7,9 @@ var memory = stream
     .retentionPolicy('one_day_only')
     .measurement('mem')
     .groupBy('host')
-    .where(lambda: "environment" != 'devel')
 
 memory
   |alert()
-   .alerta()
-    .value('{{ index .Fields "used_percent" }}')
-    .resource('{{ index .Tags "host"}}')
     .id('[kapacitor] {{ index .Tags "host"}}')
     .message('{{ .ID }} memory is {{ .Level }} value:{{ index .Fields "used_percent" }}')
     .warn(lambda: "used_percent" > warn_threshold)
