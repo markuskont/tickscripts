@@ -1,0 +1,9 @@
+stream
+|from().measurement('system')
+@useless()
+  .field('usage_idle')
+|influxDBOut()
+  .database('kapatest')
+  .retentionPolicy('default')
+  .measurement('system')
+  .tag('kapacitor', 'true')
