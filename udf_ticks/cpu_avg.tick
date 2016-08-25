@@ -1,0 +1,12 @@
+stream
+.from().measurement('cpu')
+.where(lambda: "cpu" == 'cpu-total')
+.pyavg()
+  .field('usage_idle')
+  .size(10)
+  .as('cpu_avg')
+.influxDBOut()
+  .database('telegraf')
+  .retentionPolicy('one_day_only')
+  .measurement('cpu_avg')
+  .tag('kapacitor', 'true')
